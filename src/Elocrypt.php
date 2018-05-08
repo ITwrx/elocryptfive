@@ -7,7 +7,8 @@ namespace Delatbabel\Elocrypt;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Contracts\Encryption\EncryptException;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Crypt;
+//use Illuminate\Support\Facades\Crypt;
+use App\Facades\ITwrx\ITwrxCrypt;
 
 /**
  * Trait Elocrypt.
@@ -113,7 +114,8 @@ trait Elocrypt
      */
     public function encryptedAttribute($value)
     {
-        return $this->getElocryptPrefix() . Crypt::encrypt($value);
+        //return $this->getElocryptPrefix() . Crypt::encrypt($value);
+        return $this->getElocryptPrefix() . ITwrxCrypt::encrypt($value);
     }
 
     /**
@@ -128,7 +130,8 @@ trait Elocrypt
      */
     public function decryptedAttribute($value)
     {
-        return Crypt::decrypt(str_replace($this->getElocryptPrefix(), '', $value));
+        //return Crypt::decrypt(str_replace($this->getElocryptPrefix(), '', $value));
+        return ITwrxCrypt::decrypt(str_replace($this->getElocryptPrefix(), '', $value));
     }
 
     /**
@@ -140,6 +143,7 @@ trait Elocrypt
      */
     protected function doEncryptAttribute($key)
     {
+        //if ($user->useElocrypt() && $this->shouldEncrypt($key) && ! $this->isEncrypted($this->attributes[$key])) {
         if ($this->shouldEncrypt($key) && ! $this->isEncrypted($this->attributes[$key])) {
             try {
                 $this->attributes[$key] = $this->encryptedAttribute($this->attributes[$key]);
