@@ -42,5 +42,6 @@
         "providers": [
             "Delatbabel\\Elocrypt\\ElocryptServiceProvider"
         ]        
+    }
 }
 }
