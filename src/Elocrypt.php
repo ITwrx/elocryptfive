@@ -76,6 +76,32 @@ trait Elocrypt
         return Config::has('elocrypt.prefix') ? Config::get('elocrypt.prefix') : '__ELOCRYPT__:';
     }
 
+    //overrides for laravel5.5
+    public function getDirty()
+    {
+        $dirty = [];
+
+        foreach ($this->attributes as $key => $value) {
+            if (! $this->originalIsEquivalent($key, $value)) {
+                    $dirty[$key] = $value;
+            }
+        }
+
+        return $dirty;
+    }
+
+    /**
+    * Decrypt encrypted data before it is processed by cast attribute
+    * @param $key
+    * @param $value
+    *
+    * @return mixed
+    */
+    protected function castAttribute($key, $value)
+    {
+        return parent::castAttribute($key, $this->doDecryptAttribute($key, $value));
+    }
+
     /**
      * Determine whether an attribute should be encrypted.
      *
@@ -85,9 +111,15 @@ trait Elocrypt
      */
     protected function shouldEncrypt($key)
     {
-        $encrypt = isset($this->encrypts) ? $this->encrypts : $this->encryptable;
 
-        return in_array($key, $encrypt);
+        $elocrypt_key = session('elocrypt_key');
+
+        if ($elocrypt_key != null) {
+
+            $encrypt = isset($this->encrypts) ? $this->encrypts : $this->encryptable;
+
+            return in_array($key, $encrypt);
+        }
     }
 
     /**
@@ -143,8 +175,10 @@ trait Elocrypt
      */
     protected function doEncryptAttribute($key)
     {
-        //if ($user->useElocrypt() && $this->shouldEncrypt($key) && ! $this->isEncrypted($this->attributes[$key])) {
+
+
         if ($this->shouldEncrypt($key) && ! $this->isEncrypted($this->attributes[$key])) {
+        //if ($this->shouldEncrypt($key) && ! $this->isEncrypted($this->attributes[$key])) {
             try {
                 $this->attributes[$key] = $this->encryptedAttribute($this->attributes[$key]);
             } catch (EncryptException $e) {
@@ -239,4 +273,5 @@ trait Elocrypt
     {
         return $this->doDecryptAttributes(parent::getAttributes());
     }
+
 }
