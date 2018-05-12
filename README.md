@@ -9,6 +9,8 @@ Automatically encrypt and decrypt Laravel 5 Eloquent values.
 
 ## READ THIS FIRST
 
+This branch requires L5.5+ and is being used with a custom facade and encryption service provider.
+
 Encrypted values are usually longer than plain text values.  Sometimes much longer.  You
 may find that the column widths in your database tables need to be extended to store the
 encrypted values.
