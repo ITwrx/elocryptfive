@@ -5,7 +5,7 @@
 [![Latest Stable Version](https://poser.pugx.org/delatbabel/elocryptfive/version.png)](https://packagist.org/packages/ddpro/elocryptfive)
 [![Total Downloads](https://poser.pugx.org/delatbabel/elocryptfive/d/total.png)](https://packagist.org/packages/delatbabel/elocryptfive)
 
-Automatically encrypt and decrypt Laravel 5 Eloquent values.
+Automatically encrypt and decrypt Laravel 5 Eloquent values. This branch is just stock elocrypt. For other options see other branches.
 
 ## READ THIS FIRST
 
