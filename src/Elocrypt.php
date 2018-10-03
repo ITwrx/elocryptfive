@@ -74,6 +74,29 @@ trait Elocrypt
     {
         return Config::has('elocrypt.prefix') ? Config::get('elocrypt.prefix') : '__ELOCRYPT__:';
     }
+    
+    //overrides for laravel5.5
+    public function getDirty()
+    {
+        $dirty = [];
+        foreach ($this->attributes as $key => $value) {
+            if (! $this->originalIsEquivalent($key, $value)) {
+                    $dirty[$key] = $value;
+            }
+        }
+        return $dirty;
+    }
+    /**
+    * Decrypt encrypted data before it is processed by cast attribute
+    * @param $key
+    * @param $value
+    *
+    * @return mixed
+    */
+    protected function castAttribute($key, $value)
+    {
+        return parent::castAttribute($key, $this->doDecryptAttribute($key, $value));
+    }
 
     /**
      * Determine whether an attribute should be encrypted.
@@ -231,8 +254,8 @@ trait Elocrypt
      *
      * @return array
      */
-    public function getAttributes()
+    public function getUnencryptedAttributes()
     {
-        return $this->doDecryptAttributes(parent::getAttributes());
+        return $this->doDecryptAttributes(parent::getUnencryptedAttributes());
     }
 }
