@@ -31,5 +31,12 @@
             "Delatbabel\\Elocrypt\\": "src/"
         }
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "stable",
+    "extra": {
+    "laravel": {
+        "providers": [            
+            "Delatbabel\Elocrypt\ElocryptServiceProvider"
+        ]        
+    }
+}
 }
