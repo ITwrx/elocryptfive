@@ -5,7 +5,7 @@
 [![Latest Stable Version](https://poser.pugx.org/delatbabel/elocryptfive/version.png)](https://packagist.org/packages/ddpro/elocryptfive)
 [![Total Downloads](https://poser.pugx.org/delatbabel/elocryptfive/d/total.png)](https://packagist.org/packages/delatbabel/elocryptfive)
 
-Automatically encrypt and decrypt Laravel 5 Eloquent values. This branch is stock elocrypt except it's been updated to work with L5.5 (including 5.5.43) and the encrypter has been overridden with a custom one. If you want to use the stock encrypter, use the L5.5 branch instead.
+Automatically encrypt and decrypt Laravel 5 Eloquent values. This branch is stock elocrypt except it's been updated to work with L5.5 (including 5.5.43) and the encrypter has been overridden with a custom one. If you want to use the stock encrypter, use the lts branch instead.
 
 ## READ THIS FIRST
 
@@ -34,10 +34,12 @@ not but will be automatically encrypted when it is saved back into those columns
 
 ## Requirements and Recommendations
 
-* Laravel 5.1 LTS (untested on 5.2 and later versions)
-* PHP > 5.6.0 (need the `hash_equals()` function which was added in PHP 5.6)
+* Laravel 5.5 LTS 
+* PHP > 5.6.0 (only tested with 7.2.x)
 * PHP [openssl extension](http://php.net/manual/en/book.openssl.php).
 * A working OpenSSL implementation on your OS.  OpenSSL comes pre-built with most Linux distributions and other forms of Unix such as *BSD.  There may or may not be a working OpenSSL implementation on a Windows system depending on how your LA?P stack was built.  I cannot offer support for installing or using ElocryptFive on systems that do not have an OpenSSL library.
+
+## the rest of this file has not been updated for this repo
 
 ## Contributors
 
