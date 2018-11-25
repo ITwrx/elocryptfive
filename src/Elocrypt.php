@@ -258,4 +258,32 @@ trait Elocrypt
     {
         return $this->doDecryptAttributes(parent::getUnencryptedAttributes());
     }
+    
+    //l5.5 compat
+    /**
+     * Get all of the current attributes on the model.
+     *
+     * @return array
+     */
+    public function getAttributes($shouldDecrypt = true)
+    {
+        // If the model doesn't exists yet, the attributes should never be decrypted or they will be
+        // stored in the DB as plaintext. If an attribute is accessed directly, it will still be decrypted
+        // by the getAttribute($key) method
+        return $this->exists && $shouldDecrypt ?
+            $this->doDecryptAttributes(parent::getAttributes()) :
+            parent::getAttributes();
+    }
+
+    //l5.5 compat
+    /**
+     * Get an attribute from the model.
+     *
+     * @param  string  $key
+     * @return mixed
+     */
+    public function getAttribute($key)
+    {
+        return $this->doDecryptAttribute($key, parent::getAttribute($key));
+    }
 }
