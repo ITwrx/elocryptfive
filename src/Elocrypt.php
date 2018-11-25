@@ -76,7 +76,7 @@ trait Elocrypt
         return Config::has('elocrypt.prefix') ? Config::get('elocrypt.prefix') : '__ELOCRYPT__:';
     }
 
-    //overrides for laravel5.5
+    //override for laravel5.5
     public function getDirty()
     {
         $dirty = [];
@@ -90,6 +90,7 @@ trait Elocrypt
         return $dirty;
     }
 
+    //l5.5 compat (more at the bottom of this model).
     /**
     * Decrypt encrypted data before it is processed by cast attribute
     * @param $key
@@ -150,6 +151,7 @@ trait Elocrypt
         return $this->getElocryptPrefix() . ITwrxCrypt::encrypt($value);
     }
 
+    //override laravel Crypt facade with ITwrxCrypt facade.
     /**
      * Return the decrypted value of an attribute's encrypted value.
      *
@@ -175,15 +177,18 @@ trait Elocrypt
      */
     protected function doEncryptAttribute($key)
     {
-
-
         if ($this->shouldEncrypt($key) && ! $this->isEncrypted($this->attributes[$key])) {
-        //if ($this->shouldEncrypt($key) && ! $this->isEncrypted($this->attributes[$key])) {
+
             try {
+
                 $this->attributes[$key] = $this->encryptedAttribute($this->attributes[$key]);
+
             } catch (EncryptException $e) {
+
             }
         }
+
+        return $this->attributes[$key];
     }
 
     /**
@@ -269,9 +274,37 @@ trait Elocrypt
      *
      * @return array
      */
-    public function getAttributes()
+    /*public function getAttributes()
     {
         return $this->doDecryptAttributes(parent::getAttributes());
+    }*/
+
+    //l5.5 compat
+    /**
+     * Get all of the current attributes on the model.
+     *
+     * @return array
+     */
+    public function getAttributes($shouldDecrypt = true)
+    {
+        // If the model doesn't exists yet, the attributes should never be decrypted or they will be
+        // stored in the DB as plaintext. If an attribute is accessed directly, it will still be decrypted
+        // by the getAttribute($key) method
+        return $this->exists && $shouldDecrypt ?
+            $this->doDecryptAttributes(parent::getAttributes()) :
+            parent::getAttributes();
+    }
+
+    //l5.5 compat
+    /**
+     * Get an attribute from the model.
+     *
+     * @param  string  $key
+     * @return mixed
+     */
+    public function getAttribute($key)
+    {
+        return $this->doDecryptAttribute($key, parent::getAttribute($key));
     }
 
 }
