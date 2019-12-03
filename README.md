@@ -33,29 +33,14 @@ not but will be automatically encrypted when it is saved back into those columns
 
 ## Requirements and Recommendations
 
-* Laravel 5.1 LTS (untested on 5.2 and later versions)
-* PHP > 5.6.0 (need the `hash_equals()` function which was added in PHP 5.6)
+* Laravel 6 LTS
+* PHP > 5.6.0
 * PHP [openssl extension](http://php.net/manual/en/book.openssl.php).
-* A working OpenSSL implementation on your OS.  OpenSSL comes pre-built with most Linux distributions and other forms of Unix such as *BSD.  There may or may not be a working OpenSSL implementation on a Windows system depending on how your LA?P stack was built.  I cannot offer support for installing or using ElocryptFive on systems that do not have an OpenSSL library.
+* A working OpenSSL implementation on your OS.  OpenSSL comes pre-built with most Linux distributions and other forms of Unix such as *BSD.  There may or may not be a working OpenSSL implementation on a Windows system. 
 
 ## Contributors
 
-This is Darren Taylor's Laravel 4 "elocrypt" package, ported to Laravel 5.  I have made the
-following additions/changes:
-
-* Do the encryption in separate functions (encryptedAttribute and decryptedAttribute rather than
-  inside __set and  __get, and call those from setAttribute and getAttribute as that's more
-  appropriate for Laravel 5 with the new casts features.  So, for example,
-  you can add a field to `$casts` and also to `$encrypts` so that an array can be cast to a JSON
-  string first, and then encrypted.  It should also work for Lumen.
-
-* Prefix all encrypted values with a tag string (default `__ELOCRYPT__:` ) so that plain text
-  data can be detected and handled correctly.  The task of writing a script to traverse your
-  existing database and update all plain text data to encrypted data is left to the reader.
-
-The original Laravel 4 package is here: https://github.com/dtisgodsson/elocrypt
-
-Thanks to Brandon Surowiec for some extensive refactoring of the internal methods.
+This is just a fork of a fork with very minor alterations for laravel version compatibility. Please see the fork history or the code to see the orig authors.
 
 ## Installation
 
@@ -63,8 +48,18 @@ This package can be installed via Composer by adding the following to your `comp
 
 ```
     "require": {
-        "delatbabel/elocryptfive": "~1.0"
+        "itwrx/elocryptfive": "dev-lts6",
     }
+```
+under the scripts section:
+
+```
+"repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/ITwrx/elocryptfive.git"
+        }
+    ]
 ```
 
 You must then run the following command:
@@ -72,17 +67,6 @@ You must then run the following command:
 ```
     composer update
 ```
-
-Once `composer update` has finished, then add the service provider to the `providers` array in your
-application's `config/app.php` file:
-
-```php
-    'providers' => [
-        ...
-        Delatbabel\Elocrypt\ElocryptServiceProvider::class,
-    ],
-```
-
 
 ## Configuration
 
