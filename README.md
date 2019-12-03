@@ -1,13 +1,14 @@
-# Eloquent Encryption/Decryption for Laravel 5.5
+# Eloquent Encryption/Decryption for Laravel 6
 
 [![Build Status](https://travis-ci.org/delatbabel/elocryptfive.png?branch=master)](https://travis-ci.org/delatbabel/elocryptfive)
 [![StyleCI](https://styleci.io/repos/42222272/shield)](https://styleci.io/repos/42222272)
 [![Latest Stable Version](https://poser.pugx.org/delatbabel/elocryptfive/version.png)](https://packagist.org/packages/ddpro/elocryptfive)
 [![Total Downloads](https://poser.pugx.org/delatbabel/elocryptfive/d/total.png)](https://packagist.org/packages/delatbabel/elocryptfive)
 
-Automatically encrypt and decrypt Laravel 5 Eloquent values. This branch is stock elocrypt except it's been updated to work with L5.5 (including 5.5.43).  
+Automatically encrypt and decrypt Laravel 6 Eloquent values. This branch is stock elocrypt except it's been updated to work with L6.  
 
 ## READ THIS FIRST
+**[not known working until this message has been removed]**
 
 Encrypted values are usually longer than plain text values.  Sometimes much longer.  You
 may find that the column widths in your database tables need to be extended to store the
